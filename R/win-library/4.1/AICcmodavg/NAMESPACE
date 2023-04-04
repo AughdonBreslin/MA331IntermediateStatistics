@@ -1,0 +1,874 @@
+##old export - too general
+#exportPattern(".")
+
+##export methods
+export(AICc,
+       aictab,
+       anovaOD,
+       bictab,
+       boot.wt,
+       c_hat,
+       confset,
+       countDist,
+       countHist,
+       covDiag,
+       detHist,
+       detTime,
+       DIC,
+       dictab,
+       evidence,
+       importance,
+       mb.chisq,
+       mb.gof.test,
+       modavg,
+       modavgEffect,
+       modavgPred,
+       modavgShrink,
+       multComp,
+       Nmix.chisq,
+       Nmix.gof.test,
+       predictSE,
+       summaryOD,
+       useBIC,
+       
+       ##utility functions
+       formulaShort,
+       formatCands,
+       reverse.parm,
+       reverse.exclude,
+       checkConv,
+       checkParms,
+       extractCN,
+       extractLL,
+       extractSE,
+       extractX,
+       fam.link.mer,
+       
+       ##custom functions
+       AICcCustom,
+       aictabCustom,
+       ictab,
+       modavgCustom,
+       modavgIC,
+       useBICCustom,
+       bictabCustom)
+
+       ##deprecated functions
+
+
+##export S3 methods
+S3method(print, aictab)
+S3method(print, bictab)
+S3method(print, boot.wt)
+S3method(print, c_hat)
+S3method(print, checkConv)
+S3method(print, checkParms)
+S3method(print, confset)
+S3method(print, countDist)
+S3method(print, countHist)
+S3method(print, covDiag)
+S3method(print, detHist)
+S3method(print, detTime)
+S3method(print, dictab)
+S3method(print, extractCN)
+S3method(print, extractX)
+S3method(print, evidence)
+S3method(print, ictab)
+S3method(print, importance)
+S3method(print, mb.chisq)
+S3method(print, modavg)
+S3method(print, modavgCustom)
+S3method(print, modavgEffect)
+S3method(print, modavgIC)
+S3method(print, modavgPred)
+S3method(print, modavgShrink)
+S3method(print, multComp)
+S3method(print, Nmix.chisq)
+S3method(print, summaryOD)
+S3method(print, anovaOD)
+
+
+##AICc
+S3method(AICc, default)
+S3method(AICc, aov)
+S3method(AICc, betareg)
+S3method(AICc, clm)
+S3method(AICc, clmm)
+S3method(AICc, coxme)
+S3method(AICc, coxph)
+S3method(AICc, fitdist)
+S3method(AICc, fitdistr)
+S3method(AICc, glm)
+S3method(AICc, glmmTMB)
+S3method(AICc, gls)
+S3method(AICc, gnls)
+S3method(AICc, hurdle)
+S3method(AICc, lavaan)
+S3method(AICc, lm)
+S3method(AICc, lme)
+S3method(AICc, lmekin)
+S3method(AICc, maxlikeFit)
+S3method(AICc, mer)
+S3method(AICc, merMod)
+S3method(AICc, lmerModLmerTest)
+S3method(AICc, multinom)
+S3method(AICc, negbin)
+S3method(AICc, nlme)
+S3method(AICc, nls)
+S3method(AICc, polr)
+S3method(AICc, rlm)
+S3method(AICc, survreg)
+S3method(AICc, unmarkedFit)
+S3method(AICc, vglm)
+S3method(AICc, zeroinfl)
+
+##export AICc.vglm explicitly
+#export(AICc.vglm)
+
+##aictab
+S3method(aictab, default)
+S3method(aictab, AICaov.lm)
+S3method(aictab, AICbetareg)
+S3method(aictab, AICsclm.clm)
+S3method(aictab, AICclmm)
+S3method(aictab, AICclm)
+S3method(aictab, AICcoxme)
+S3method(aictab, AICcoxph)
+S3method(aictab, AICfitdist)
+S3method(aictab, AICfitdistr)
+S3method(aictab, AICglm.lm)
+S3method(aictab, AICglmmTMB)
+S3method(aictab, AICgls)
+S3method(aictab, AICgnls.gls)
+S3method(aictab, AIChurdle)
+S3method(aictab, AIClavaan)
+S3method(aictab, AIClm)
+S3method(aictab, AIClme)
+S3method(aictab, AIClmekin)
+S3method(aictab, AICmaxlikeFit.list)
+S3method(aictab, AICmer)
+S3method(aictab, AIClmerMod)
+S3method(aictab, AIClmerModLmerTest)
+S3method(aictab, AICglmerMod)
+S3method(aictab, AICnlmerMod)
+S3method(aictab, AICmultinom.nnet)
+S3method(aictab, AICnegbin.glm.lm)
+S3method(aictab, AICnlme.lme)
+S3method(aictab, AICnls)
+S3method(aictab, AICpolr)
+S3method(aictab, AICrlm.lm)
+S3method(aictab, AICsurvreg)
+S3method(aictab, AICunmarkedFitOccu)
+S3method(aictab, AICunmarkedFitColExt)
+S3method(aictab, AICunmarkedFitOccuRN)
+S3method(aictab, AICunmarkedFitPCount)
+S3method(aictab, AICunmarkedFitPCO)
+S3method(aictab, AICunmarkedFitDS)
+S3method(aictab, AICunmarkedFitGDS)
+S3method(aictab, AICunmarkedFitOccuFP)
+S3method(aictab, AICunmarkedFitMPois)
+S3method(aictab, AICunmarkedFitGMM)
+S3method(aictab, AICunmarkedFitGPC)
+S3method(aictab, AICunmarkedFitOccuMulti)
+S3method(aictab, AICunmarkedFitOccuMS)
+S3method(aictab, AICunmarkedFitOccuTTD)
+S3method(aictab, AICunmarkedFitMMO)
+S3method(aictab, AICunmarkedFitDSO)
+S3method(aictab, AICvglm)
+S3method(aictab, AICzeroinfl)
+
+
+##anovaOD
+S3method(anovaOD, default)
+S3method(anovaOD, glm)
+S3method(anovaOD, glmmTMB)
+S3method(anovaOD, unmarkedFitOccu)
+S3method(anovaOD, unmarkedFitColExt)
+S3method(anovaOD, unmarkedFitOccuRN)
+S3method(anovaOD, unmarkedFitPCount)
+S3method(anovaOD, unmarkedFitPCO)
+S3method(anovaOD, unmarkedFitDS)
+S3method(anovaOD, unmarkedFitGDS)
+S3method(anovaOD, unmarkedFitOccuFP)
+S3method(anovaOD, unmarkedFitMPois)
+S3method(anovaOD, unmarkedFitGMM)
+S3method(anovaOD, unmarkedFitGPC)
+S3method(anovaOD, unmarkedFitOccuMulti)
+S3method(anovaOD, unmarkedFitOccuMS)
+S3method(anovaOD, unmarkedFitOccuTTD)
+S3method(anovaOD, unmarkedFitMMO)
+S3method(anovaOD, unmarkedFitDSO)
+S3method(anovaOD, glmerMod)
+S3method(anovaOD, maxlikeFit)
+S3method(anovaOD, multinom)
+S3method(anovaOD, vglm)
+
+
+##bictab
+S3method(bictab, default)
+S3method(bictab, AICaov.lm)
+S3method(bictab, AICbetareg)
+S3method(bictab, AICsclm.clm)
+S3method(bictab, AICclmm)
+S3method(bictab, AICclm)
+S3method(bictab, AICcoxme)
+S3method(bictab, AICcoxph)
+S3method(bictab, AICfitdist)
+S3method(bictab, AICfitdistr)
+S3method(bictab, AICglm.lm)
+S3method(bictab, AICglmmTMB)
+S3method(bictab, AICgls)
+S3method(bictab, AICgnls.gls)
+S3method(bictab, AIChurdle)
+S3method(bictab, AIClavaan)
+S3method(bictab, AIClm)
+S3method(bictab, AIClme)
+S3method(bictab, AIClmekin)
+S3method(bictab, AICmaxlikeFit.list)
+S3method(bictab, AICmer)
+S3method(bictab, AIClmerMod)
+S3method(bictab, AIClmerModLmerTest)
+S3method(bictab, AICglmerMod)
+S3method(bictab, AICnlmerMod)
+S3method(bictab, AICmultinom.nnet)
+S3method(bictab, AICnegbin.glm.lm)
+S3method(bictab, AICnlme.lme)
+S3method(bictab, AICnls)
+S3method(bictab, AICpolr)
+S3method(bictab, AICrlm.lm)
+S3method(bictab, AICsurvreg)
+S3method(bictab, AICunmarkedFitOccu)
+S3method(bictab, AICunmarkedFitColExt)
+S3method(bictab, AICunmarkedFitOccuRN)
+S3method(bictab, AICunmarkedFitPCount)
+S3method(bictab, AICunmarkedFitPCO)
+S3method(bictab, AICunmarkedFitDS)
+S3method(bictab, AICunmarkedFitGDS)
+S3method(bictab, AICunmarkedFitOccuFP)
+S3method(bictab, AICunmarkedFitMPois)
+S3method(bictab, AICunmarkedFitGMM)
+S3method(bictab, AICunmarkedFitGPC)
+S3method(bictab, AICunmarkedFitOccuMulti)
+S3method(bictab, AICunmarkedFitOccuMS)
+S3method(bictab, AICunmarkedFitOccuTTD)
+S3method(bictab, AICunmarkedFitMMO)
+S3method(bictab, AICunmarkedFitDSO)
+S3method(bictab, AICvglm)
+S3method(bictab, AICzeroinfl)
+
+
+##boot.wt
+S3method(boot.wt, default)
+S3method(boot.wt, AICaov.lm)
+S3method(boot.wt, AICbetareg)
+S3method(boot.wt, AICsclm.clm)
+S3method(boot.wt, AICglm.lm)
+S3method(boot.wt, AIChurdle)
+S3method(boot.wt, AIClm)
+S3method(boot.wt, AICmultinom.nnet)
+S3method(boot.wt, AICpolr)
+S3method(boot.wt, AICrlm.lm)
+S3method(boot.wt, AICsurvreg)
+S3method(boot.wt, AICvglm)
+S3method(boot.wt, AICzeroinfl)
+
+
+##c_hat
+S3method(c_hat, default)
+S3method(c_hat, glm)
+S3method(c_hat, glmmTMB)
+S3method(c_hat, merMod)
+S3method(c_hat, vglm)
+
+
+##checkConv
+S3method(checkConv, default)
+S3method(checkConv, betareg)
+S3method(checkConv, clm)
+S3method(checkConv, clmm)
+S3method(checkConv, glm)
+S3method(checkConv, glmmTMB)
+S3method(checkConv, hurdle)
+S3method(checkConv, lavaan)
+S3method(checkConv, maxlikeFit)
+S3method(checkConv, merMod)
+S3method(checkConv, lmerModLmerTest)
+S3method(checkConv, multinom)
+S3method(checkConv, nls)
+S3method(checkConv, polr)
+S3method(checkConv, unmarkedFit)
+S3method(checkConv, zeroinfl)
+
+
+##checkParms
+S3method(checkParms, default)
+S3method(checkParms, betareg)
+S3method(checkParms, clm)
+S3method(checkParms, clmm)
+S3method(checkParms, coxme)
+S3method(checkParms, coxph)
+S3method(checkParms, glm)
+S3method(checkParms, glmmTMB)
+S3method(checkParms, gls)
+S3method(checkParms, gnls)
+S3method(checkParms, hurdle)
+S3method(checkParms, lm)
+S3method(checkParms, lme)
+S3method(checkParms, lmekin)
+S3method(checkParms, maxlikeFit)
+S3method(checkParms, merMod)
+S3method(checkParms, lmerModLmerTest)
+S3method(checkParms, multinom)
+S3method(checkParms, nlme)
+S3method(checkParms, nls)
+S3method(checkParms, polr)
+S3method(checkParms, rlm)
+S3method(checkParms, survreg)
+S3method(checkParms, unmarkedFit)
+S3method(checkParms, vglm)
+S3method(checkParms, zeroinfl)
+
+
+##countDist
+S3method(countDist, default)
+S3method(countDist, unmarkedFrameDS)
+S3method(countDist, unmarkedFitDS)
+S3method(countDist, unmarkedFrameGDS)
+S3method(countDist, unmarkedFitGDS)
+S3method(countDist, unmarkedFrameDSO)
+S3method(countDist, unmarkedFitDSO)
+
+##countHist
+S3method(countHist, default)
+S3method(countHist, unmarkedFramePCount)
+S3method(countHist, unmarkedFitPCount)
+S3method(countHist, unmarkedFrameGPC)
+S3method(countHist, unmarkedFitGPC)
+S3method(countHist, unmarkedFrameMPois)
+S3method(countHist, unmarkedFitMPois)
+S3method(countHist, unmarkedFramePCO)
+S3method(countHist, unmarkedFitPCO)
+S3method(countHist, unmarkedFrameGMM)
+S3method(countHist, unmarkedFitGMM)
+S3method(countHist, unmarkedFrameMMO)
+S3method(countHist, unmarkedFitMMO)
+
+
+##covDiag
+S3method(covDiag, default)
+S3method(covDiag, unmarkedFitPCount)
+S3method(covDiag, unmarkedFramePCount)
+
+
+##detHist
+S3method(detHist, default)
+S3method(detHist, unmarkedFitColExt)
+S3method(detHist, unmarkedFitOccu)
+S3method(detHist, unmarkedFitOccuFP)
+S3method(detHist, unmarkedFitOccuRN)
+S3method(detHist, unmarkedFrameOccu)
+S3method(detHist, unmarkedFrameOccuFP)
+S3method(detHist, unmarkedMultFrame)
+S3method(detHist, unmarkedFitOccuMulti)
+S3method(detHist, unmarkedFrameOccuMulti)
+S3method(detHist, unmarkedFitOccuMS)
+S3method(detHist, unmarkedFrameOccuMS)
+
+
+##detHist
+S3method(detTime, default)
+S3method(detTime, unmarkedFitOccuTTD)
+S3method(detTime, unmarkedFrameOccuTTD)
+
+
+##DIC
+S3method(DIC, default)
+S3method(DIC, bugs)
+S3method(DIC, rjags)
+S3method(DIC, jagsUI)
+
+
+##dictab
+S3method(dictab, default)
+S3method(dictab, AICbugs)
+S3method(dictab, AICrjags)
+S3method(dictab, AICjagsUI)
+
+
+##extractCN
+S3method(extractCN, default)
+S3method(extractCN, unmarkedFit)
+
+
+##extractLL
+S3method(extractLL, default)
+S3method(extractLL, coxph)
+S3method(extractLL, coxme)
+S3method(extractLL, lmekin)
+S3method(extractLL, maxlikeFit)
+S3method(extractLL, unmarkedFit)
+S3method(extractLL, vglm)
+
+
+##extractSE
+S3method(extractSE, default)
+S3method(extractSE, coxme)
+S3method(extractSE, lmekin)
+S3method(extractSE, mer)
+S3method(extractSE, merMod)
+S3method(extractSE, lmerModLmerTest)
+
+
+##extractX
+S3method(extractX, default)
+S3method(extractX, AICaov.lm)
+S3method(extractX, AICglm.lm)
+S3method(extractX, AICglmmTMB)
+S3method(extractX, AICgls)
+S3method(extractX, AIClm)
+S3method(extractX, AIClme)
+S3method(extractX, AICglmerMod)
+S3method(extractX, AIClmerMod)
+S3method(extractX, AIClmerModLmerTest)
+S3method(extractX, AICrlm.lm)
+S3method(extractX, AICsurvreg)
+S3method(extractX, AICunmarkedFitOccu)
+S3method(extractX, AICunmarkedFitColExt)
+S3method(extractX, AICunmarkedFitOccuRN)
+S3method(extractX, AICunmarkedFitPCount)
+S3method(extractX, AICunmarkedFitPCO)
+S3method(extractX, AICunmarkedFitDS)
+S3method(extractX, AICunmarkedFitGDS)
+S3method(extractX, AICunmarkedFitOccuFP)
+S3method(extractX, AICunmarkedFitMPois)
+S3method(extractX, AICunmarkedFitGMM)
+S3method(extractX, AICunmarkedFitGPC)
+S3method(extractX, AICunmarkedFitOccuMulti)
+S3method(extractX, AICunmarkedFitOccuMS)
+S3method(extractX, AICunmarkedFitOccuTTD)
+S3method(extractX, AICunmarkedFitMMO)
+S3method(extractX, AICunmarkedFitDSO)
+
+##importance
+S3method(importance, default)
+S3method(importance, AICaov.lm)
+S3method(importance, AICbetareg)
+S3method(importance, AICsclm.clm)
+S3method(importance, AICclm)
+S3method(importance, AICclmm)
+S3method(importance, AICclogit.coxph)
+S3method(importance, AICcoxme)
+S3method(importance, AICcoxph)
+S3method(importance, AICglm.lm)
+S3method(importance, AICglmmTMB)
+S3method(importance, AICglmerMod)
+S3method(importance, AIClmerModLmerTest)
+S3method(importance, AICgls)
+S3method(importance, AIChurdle)
+S3method(importance, AIClm)
+S3method(importance, AIClme)
+S3method(importance, AIClmekin)
+S3method(importance, AICmaxlikeFit.list)
+S3method(importance, AICmer)
+S3method(importance, AICmultinom.nnet)
+S3method(importance, AICnegbin.glm.lm)
+S3method(importance, AICnlmerMod)
+S3method(importance, AICpolr)
+S3method(importance, AICrlm.lm)
+S3method(importance, AICsurvreg)
+S3method(importance, AICunmarkedFitColExt)
+S3method(importance, AICunmarkedFitOccu)
+S3method(importance, AICunmarkedFitOccuFP)
+S3method(importance, AICunmarkedFitOccuRN)
+S3method(importance, AICunmarkedFitPCount)
+S3method(importance, AICunmarkedFitPCO)
+S3method(importance, AICunmarkedFitDS)
+S3method(importance, AICunmarkedFitGDS)
+S3method(importance, AICunmarkedFitMPois)
+S3method(importance, AICunmarkedFitGMM)
+S3method(importance, AICunmarkedFitGPC)
+S3method(importance, AICunmarkedFitOccuMulti)
+S3method(importance, AICunmarkedFitOccuMS)
+S3method(importance, AICunmarkedFitOccuTTD)
+S3method(importance, AICunmarkedFitMMO)
+S3method(importance, AICunmarkedFitDSO)
+S3method(importance, AICvglm)
+S3method(importance, AICzeroinfl)
+
+
+##mb.chisq
+S3method(mb.chisq, default)
+S3method(mb.chisq, unmarkedFitOccu)
+S3method(mb.chisq, unmarkedFitColExt)
+S3method(mb.chisq, unmarkedFitOccuRN)
+
+
+##mb.gof.test
+S3method(mb.gof.test, default)
+S3method(mb.gof.test, unmarkedFitOccu)
+S3method(mb.gof.test, unmarkedFitColExt)
+S3method(mb.gof.test, unmarkedFitOccuRN)
+
+
+##modavg
+S3method(modavg, default)
+S3method(modavg, AICaov.lm)
+S3method(modavg, AICbetareg)
+S3method(modavg, AICsclm.clm)
+S3method(modavg, AICclm)
+S3method(modavg, AICclmm)
+S3method(modavg, AICcoxme)
+S3method(modavg, AICcoxph)
+S3method(modavg, AICglm.lm)
+S3method(modavg, AICglmmTMB)
+S3method(modavg, AICgls)
+S3method(modavg, AIChurdle)
+S3method(modavg, AIClm)
+S3method(modavg, AIClme)
+S3method(modavg, AIClmekin)
+S3method(modavg, AICmaxlikeFit.list)
+S3method(modavg, AICmer)
+S3method(modavg, AIClmerMod)
+S3method(modavg, AIClmerModLmerTest)
+S3method(modavg, AICglmerMod)
+S3method(modavg, AICmultinom.nnet)
+S3method(modavg, AICnegbin.glm.lm)
+S3method(modavg, AICpolr)
+S3method(modavg, AICrlm.lm)
+S3method(modavg, AICsurvreg)
+S3method(modavg, AICvglm)
+S3method(modavg, AICzeroinfl)
+S3method(modavg, AICunmarkedFitOccu)
+S3method(modavg, AICunmarkedFitColExt)
+S3method(modavg, AICunmarkedFitOccuRN)
+S3method(modavg, AICunmarkedFitPCount)
+S3method(modavg, AICunmarkedFitPCO)
+S3method(modavg, AICunmarkedFitDS)
+S3method(modavg, AICunmarkedFitGDS)
+S3method(modavg, AICunmarkedFitOccuFP)
+S3method(modavg, AICunmarkedFitMPois)
+S3method(modavg, AICunmarkedFitGMM)
+S3method(modavg, AICunmarkedFitGPC)
+S3method(modavg, AICunmarkedFitOccuMulti)
+S3method(modavg, AICunmarkedFitOccuMS)
+S3method(modavg, AICunmarkedFitOccuTTD)
+S3method(modavg, AICunmarkedFitMMO)
+S3method(modavg, AICunmarkedFitDSO)
+
+
+##modavgEffect
+S3method(modavgEffect, default)
+S3method(modavgEffect, AICaov.lm)
+S3method(modavgEffect, AICglm.lm)
+S3method(modavgEffect, AICgls)
+S3method(modavgEffect, AIClm)
+S3method(modavgEffect, AIClme)
+S3method(modavgEffect, AICmer)
+S3method(modavgEffect, AICglmerMod)
+S3method(modavgEffect, AIClmerMod)
+S3method(modavgEffect, AIClmerModLmerTest)
+S3method(modavgEffect, AICnegbin.glm.lm)
+S3method(modavgEffect, AICrlm.lm)
+S3method(modavgEffect, AICsurvreg)
+S3method(modavgEffect, AICunmarkedFitOccu)
+S3method(modavgEffect, AICunmarkedFitColExt)
+S3method(modavgEffect, AICunmarkedFitOccuRN)
+S3method(modavgEffect, AICunmarkedFitPCount)
+S3method(modavgEffect, AICunmarkedFitPCO)
+S3method(modavgEffect, AICunmarkedFitDS)
+S3method(modavgEffect, AICunmarkedFitGDS)
+S3method(modavgEffect, AICunmarkedFitOccuFP)
+S3method(modavgEffect, AICunmarkedFitMPois)
+S3method(modavgEffect, AICunmarkedFitGMM)
+S3method(modavgEffect, AICunmarkedFitGPC)
+S3method(modavgEffect, AICunmarkedFitOccuTTD)
+S3method(modavgEffect, AICunmarkedFitMMO)
+S3method(modavgEffect, AICunmarkedFitDSO)
+S3method(modavgEffect, AICunmarkedFitOccuMS)
+S3method(modavgEffect, AICunmarkedFitOccuMulti)
+
+
+##modavgPred
+S3method(modavgPred, default)
+S3method(modavgPred, AICaov.lm)
+S3method(modavgPred, AICglm.lm)
+S3method(modavgPred, AICgls)
+S3method(modavgPred, AIClm)
+S3method(modavgPred, AIClme)
+S3method(modavgPred, AICglmerMod)
+S3method(modavgPred, AIClmerMod)
+S3method(modavgPred, AIClmerModLmerTest)
+S3method(modavgPred, AICmer)
+S3method(modavgPred, AICnegbin.glm.lm)
+S3method(modavgPred, AICrlm.lm)
+S3method(modavgPred, AICsurvreg)
+S3method(modavgPred, AICunmarkedFitOccu)
+S3method(modavgPred, AICunmarkedFitColExt)
+S3method(modavgPred, AICunmarkedFitOccuRN)
+S3method(modavgPred, AICunmarkedFitPCount)
+S3method(modavgPred, AICunmarkedFitPCO)
+S3method(modavgPred, AICunmarkedFitDS)
+S3method(modavgPred, AICunmarkedFitGDS)
+S3method(modavgPred, AICunmarkedFitOccuFP)
+S3method(modavgPred, AICunmarkedFitMPois)
+S3method(modavgPred, AICunmarkedFitGMM)
+S3method(modavgPred, AICunmarkedFitGPC)
+S3method(modavgPred, AICunmarkedFitOccuTTD)
+S3method(modavgPred, AICunmarkedFitMMO)
+S3method(modavgPred, AICunmarkedFitDSO)
+S3method(modavgPred, AICunmarkedFitOccuMS)
+S3method(modavgPred, AICunmarkedFitOccuMulti)
+
+
+
+##modavgShrink
+S3method(modavgShrink, default)
+S3method(modavgShrink, AICaov.lm)
+S3method(modavgShrink, AICbetareg)
+S3method(modavgShrink, AICsclm.clm)
+S3method(modavgShrink, AICclm)
+S3method(modavgShrink, AICclmm)
+S3method(modavgShrink, AICcoxme)
+S3method(modavgShrink, AICcoxph)
+S3method(modavgShrink, AICglm.lm)
+S3method(modavgShrink, AICglmmTMB)
+S3method(modavgShrink, AICgls)
+S3method(modavgShrink, AIChurdle)
+S3method(modavgShrink, AIClm)
+S3method(modavgShrink, AIClme)
+S3method(modavgShrink, AIClmekin)
+S3method(modavgShrink, AICmaxlikeFit.list)
+S3method(modavgShrink, AICmer)
+S3method(modavgShrink, AICglmerMod)
+S3method(modavgShrink, AIClmerMod)
+S3method(modavgShrink, AIClmerModLmerTest)
+S3method(modavgShrink, AICmultinom.nnet)
+S3method(modavgShrink, AICnegbin.glm.lm)
+S3method(modavgShrink, AICpolr)
+S3method(modavgShrink, AICrlm.lm)
+S3method(modavgShrink, AICsurvreg)
+S3method(modavgShrink, AICvglm)
+S3method(modavgShrink, AICzeroinfl)
+S3method(modavgShrink, AICunmarkedFitOccu)
+S3method(modavgShrink, AICunmarkedFitColExt)
+S3method(modavgShrink, AICunmarkedFitOccuRN)
+S3method(modavgShrink, AICunmarkedFitPCount)
+S3method(modavgShrink, AICunmarkedFitPCO)
+S3method(modavgShrink, AICunmarkedFitDS)
+S3method(modavgShrink, AICunmarkedFitGDS)
+S3method(modavgShrink, AICunmarkedFitOccuFP)
+S3method(modavgShrink, AICunmarkedFitMPois)
+S3method(modavgShrink, AICunmarkedFitGMM)
+S3method(modavgShrink, AICunmarkedFitGPC)
+S3method(modavgShrink, AICunmarkedFitOccuMulti)
+S3method(modavgShrink, AICunmarkedFitOccuMS)
+S3method(modavgShrink, AICunmarkedFitOccuTTD)
+S3method(modavgShrink, AICunmarkedFitMMO)
+S3method(modavgShrink, AICunmarkedFitDSO)
+
+
+##multComp
+S3method(multComp, default)
+S3method(multComp, aov)
+S3method(multComp, gls)
+S3method(multComp, glm)
+S3method(multComp, lm)
+S3method(multComp, lme)
+S3method(multComp, mer)
+S3method(multComp, merMod)
+S3method(multComp, lmerModLmerTest)
+S3method(multComp, negbin)
+S3method(multComp, rlm)
+S3method(multComp, survreg)
+
+
+##Nmix.chisq
+S3method(Nmix.chisq, default)
+S3method(Nmix.chisq, unmarkedFitPCount)
+S3method(Nmix.chisq, unmarkedFitPCO)
+S3method(Nmix.chisq, unmarkedFitMPois)
+S3method(Nmix.chisq, unmarkedFitDS)
+S3method(Nmix.chisq, unmarkedFitGDS)
+S3method(Nmix.chisq, unmarkedFitGPC)
+S3method(Nmix.chisq, unmarkedFitGMM)
+S3method(Nmix.chisq, unmarkedFitMMO)
+S3method(Nmix.chisq, unmarkedFitDSO)
+
+
+##Nmix.gof.test
+S3method(Nmix.gof.test, default)
+S3method(Nmix.gof.test, unmarkedFitPCount)
+S3method(Nmix.gof.test, unmarkedFitPCO)
+S3method(Nmix.gof.test, unmarkedFitDS)
+S3method(Nmix.gof.test, unmarkedFitGDS)
+S3method(Nmix.gof.test, unmarkedFitGMM)
+S3method(Nmix.gof.test, unmarkedFitGPC)
+S3method(Nmix.gof.test, unmarkedFitMPois)
+S3method(Nmix.gof.test, unmarkedFitMMO)
+S3method(Nmix.gof.test, unmarkedFitDSO)
+
+
+##predictSE
+S3method(predictSE, default)
+S3method(predictSE, gls)
+S3method(predictSE, lme)
+S3method(predictSE, mer)
+S3method(predictSE, merMod)
+S3method(predictSE, lmerModLmerTest)
+S3method(predictSE, unmarkedFitPCount)
+S3method(predictSE, unmarkedFitPCO)
+
+
+##summaryOD
+S3method(summaryOD, default)
+S3method(summaryOD, glm)
+S3method(summaryOD, glmmTMB)
+S3method(summaryOD, unmarkedFitOccu)
+S3method(summaryOD, unmarkedFitColExt)
+S3method(summaryOD, unmarkedFitOccuRN)
+S3method(summaryOD, unmarkedFitPCount)
+S3method(summaryOD, unmarkedFitPCO)
+S3method(summaryOD, unmarkedFitDS)
+S3method(summaryOD, unmarkedFitGDS)
+S3method(summaryOD, unmarkedFitOccuFP)
+S3method(summaryOD, unmarkedFitMPois)
+S3method(summaryOD, unmarkedFitGMM)
+S3method(summaryOD, unmarkedFitGPC)
+S3method(summaryOD, unmarkedFitOccuMulti)
+S3method(summaryOD, unmarkedFitOccuMS)
+S3method(summaryOD, unmarkedFitOccuTTD)
+S3method(summaryOD, unmarkedFitMMO)
+S3method(summaryOD, unmarkedFitDSO)
+S3method(summaryOD, glmerMod)
+S3method(summaryOD, maxlikeFit)
+S3method(summaryOD, multinom)
+S3method(summaryOD, vglm)
+
+
+
+
+##useBIC
+S3method(useBIC, default)
+S3method(useBIC, aov)
+S3method(useBIC, betareg)
+S3method(useBIC, clm)
+S3method(useBIC, clmm)
+S3method(useBIC, coxme)
+S3method(useBIC, coxph)
+S3method(useBIC, fitdist)
+S3method(useBIC, fitdistr)
+S3method(useBIC, glm)
+S3method(useBIC, glmmTMB)
+S3method(useBIC, gls)
+S3method(useBIC, gnls)
+S3method(useBIC, hurdle)
+S3method(useBIC, lavaan)
+S3method(useBIC, lm)
+S3method(useBIC, lme)
+S3method(useBIC, lmekin)
+S3method(useBIC, maxlikeFit)
+S3method(useBIC, mer)
+S3method(useBIC, merMod)
+S3method(useBIC, lmerModLmerTest)
+S3method(useBIC, multinom)
+S3method(useBIC, nlme)
+S3method(useBIC, nls)
+S3method(useBIC, polr)
+S3method(useBIC, rlm)
+S3method(useBIC, survreg)
+S3method(useBIC, unmarkedFit)
+S3method(useBIC, vglm)
+S3method(useBIC, zeroinfl)
+
+
+##xtable
+S3method(xtable, aictab)
+S3method(xtable, anovaOD)
+S3method(xtable, bictab)
+S3method(xtable, boot.wt)
+S3method(xtable, checkParms)
+S3method(xtable, countDist)
+S3method(xtable, countHist)
+S3method(xtable, detHist)
+S3method(xtable, detTime)
+S3method(xtable, dictab)
+S3method(xtable, ictab)
+S3method(xtable, mb.chisq)
+S3method(xtable, modavg)
+S3method(xtable, modavgCustom)
+S3method(xtable, modavgEffect)
+S3method(xtable, modavgIC)
+S3method(xtable, modavgPred)
+S3method(xtable, modavgShrink)
+S3method(xtable, multComp)
+S3method(xtable, summaryOD)
+
+
+
+
+
+
+##defunct functions
+
+
+##import methods
+import(methods, stats, lattice, MASS, Matrix, nlme, stats4, survival)
+importFrom(unmarked,
+           predict,
+           coef,
+           fitted,
+           parboot,
+           obsCovs,
+           siteCovs,
+           vcov,
+           yearlySiteCovs)
+importFrom(VGAM,
+           formula,
+           logLik,
+           coefficients,
+           residuals,
+           fitted,
+           vcov)
+importFrom(graphics,
+           barplot,
+           hist,
+           title,
+           abline,
+           par)
+importFrom(xtable,
+           xtable,
+           print.xtable,
+           align,
+           caption,
+           label,
+           digits,
+           display,
+           "align<-",
+           "caption<-",
+           "label<-",
+           "digits<-",
+           "display<-")
+importFrom("utils",
+           "capture.output",
+           "str")
+
+##export deprecated functions
+
+##these functions are imported by other packages
+export(predictSE.lme,
+       predictSE.mer)
+
+##export functions predictSE
+export(predictSE.gls,
+       predictSE.merMod,
+       predictSE.unmarkedFitPCO,
+       predictSE.unmarkedFitPCount)
+
+##importMethodsFrom(stats4,coef,logLik,summary)
+#importFrom(stats,
+#           anova, coef, logLik, deviance, family, fitted, residuals,
+#           formula, predict, update, vcov)
+#importFrom(stats4,
+#           anova,coef,deviance,family,fitted,residuals,
+#           formula,predict,update,vcov)
+#importFrom(Matrix, diag)

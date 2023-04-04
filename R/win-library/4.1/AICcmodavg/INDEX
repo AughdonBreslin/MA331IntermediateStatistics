@@ -1,0 +1,87 @@
+AICc                    Computing AIC, AICc, QAIC, and QAICc
+AICcCustom              Compute AIC, AICc, QAIC, and QAICc from
+                        User-supplied Input
+AICcmodavg-defunct      Defunct Functions in AICcmodavg Package
+AICcmodavg-package      Model Selection and Multimodel Inference Based
+                        on (Q)AIC(c)
+DIC                     Computing DIC
+Nmix.gof.test           Compute Chi-square Goodness-of-fit Test for
+                        N-mixture Models
+aictab                  Create Model Selection Tables
+aictabCustom            Create Model Selection Tables from
+                        User-supplied Input Based on (Q)AIC(c)
+anovaOD                 Likelihood-Ratio Test Corrected for
+                        Overdispersion
+beetle                  Flour Beetle Data
+bictab                  Create Model Selection Tables Based on BIC
+bictabCustom            Create Model Selection Tables from
+                        User-supplied Input Based on (Q)BIC
+boot.wt                 Compute Model Selection Relative Frequencies
+bullfrog                Bullfrog Occupancy and Common Reed Invasion
+c_hat                   Estimate Dispersion for Poisson and Binomial
+                        GLM's and GLMM's
+calcium                 Blood Calcium Concentration in Birds
+cement                  Heat Expended Following Hardening of Portland
+                        Cement
+checkConv               Check Convergence of Fitted Model
+checkParms              Identify Parameters with Large Standard Errors
+confset                 Computing Confidence Set for the
+                        Kullback-Leibler Best Model
+countDist               Compute Summary Statistics from Distance
+                        Sampling Data
+countHist               Compute Summary Statistics from Count Histories
+covDiag                 Compute Covariance Diagnostic for Lambda in
+                        _N_-mixture Models
+detHist                 Compute Summary Statistics from Detection
+                        Histories
+detTime                 Compute Summary Statistics from Time to
+                        Detection Data
+dictab                  Create Model Selection Tables from Bayesian
+                        Analyses
+dry.frog                Frog Dehydration Experiment on Three Substrate
+                        Types
+evidence                Compute Evidence Ratio Between Two Models
+extractCN               Compute Condition Number
+extractLL               Extract Log-Likelihood of Model
+extractSE               Extract SE of Fixed Effects
+extractX                Extract Predictors from Candidate Model List
+fam.link.mer            Extract Distribution Family and Link Function
+fat                     Fat Data and Body Measurements
+gpa                     GPA Data and Standardized Test Scores
+ictab                   Create Model Selection Tables from
+                        User-supplied Information Criterion
+importance              Compute Importance Values of Variable
+iron                    Iron Content in Food
+lizards                 Habitat Preference of Lizards
+mb.gof.test             Compute MacKenzie and Bailey Goodness-of-fit
+                        Test for Single Season, Dynamic, and
+                        Royle-Nichols Occupancy Models
+min.trap                Anuran Larvae Counts in Minnow Traps Across
+                        Pond Type
+modavg                  Compute Model-averaged Parameter Estimate
+                        (Multimodel Inference)
+modavgCustom            Compute Model-averaged Parameter Estimate from
+                        User-supplied Input Based on (Q)AIC(c)
+modavgEffect            Compute Model-averaged Effect Sizes (Multimodel
+                        Inference on Group Differences)
+modavgIC                Compute Model-averaged Parameter Estimate from
+                        User-supplied Information Criterion
+modavgPred              Compute Model-averaged Predictions
+modavgShrink            Compute Model-averaged Parameter Estimate with
+                        Shrinkage (Multimodel Inference)
+multComp                Create Model Selection Tables based on Multiple
+                        Comparisons
+newt                    Newt Capture-mark-recapture Data
+pine                    Strength of Pine Wood Based on the Density
+                        Adjusted for Resin Content
+predictSE               Computing Predicted Values and Standard Errors
+reverse.parm            Various Utility Functions
+salamander              Salamander Capture-mark-recapture Data
+summaryOD               Display Model Summary Corrected for
+                        Overdispersion
+tortoise                Gopher Tortoise Distance Sampling Data
+turkey                  Turkey Weight Gain
+useBIC                  Computing BIC or QBIC
+useBICCustom            Custom Computation of BIC and QBIC from
+                        User-supplied Input
+xtable.aictab           Format Objects to LaTeX or HTML

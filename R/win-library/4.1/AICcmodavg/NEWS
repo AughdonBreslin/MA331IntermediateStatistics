@@ -1,0 +1,639 @@
+####################################################################
+##
+##THIS FILE DOCUMENTS CHANGES TO FUNCTIONS IN PACKAGE AICcmodavg
+##Author:  Marc J. Mazerolle <marc.mazerolle@sbf.ulaval.ca>
+##
+####################################################################
+##revision 2.3-1 (21 August 2020)
+##- corrected bug in margin width when plotting results of 'mb.gof.test'
+##  with dynamic occupancy model models (thanks to M. Meredith)
+##- added 'ncores' argument to 'mb.gof.test' and 'Nmix.gof.test' to
+##  control number of cores used parametric bootstrap (suggested by M. Meredith)
+##- added arguments 'cex.axis', 'cex.lab', 'cex.main', and 'lwd' to add
+##  flexibility to various functions producing plots (i.e., 'mb.gof.test',
+##  'Nmix.gof.test', 'detTime', 'countDist', 'countHist')
+##- created an NEWS.Rd file
+##- created a vignette for a tour of main functions of the package
+
+
+
+####################################################################
+##revision 2.3-0 (3 July 2020)
+##- added support for models of classes 'unmarkedFitOccuMS', 'unmarkedFitOccuTTD'
+##  'unmarkedFitMMO, 'unmarkedFitDSO'
+##- created new function 'detTime' to summarize time to detection data for
+##  models of class 'unmarkedFitOccuTTD'
+##- addedd 'modavgPred' method for 'unmarkedFitOccuMulti' and 'unmarkedFitOccuMS'
+##  objects
+##- modified default plotting parameters in functions 'countHist', 'countDist',
+##  'detTime', 'mb.gof.test', and 'Nmix.gof.test'
+##- modified 'mb.chisq' methods to allow for new default behavior of R to use
+##  stringsAsFactors = FALSE for characters in data frames
+##- correction bug for GOF Royle-Nichols model (thanks to Ken Kellner)
+
+
+
+####################################################################
+##revision 2.2-2 (5 May 2019)
+##- added methods for 'lmerTest' objects
+##- corrected bug when model names are NULL in 'modavgEffect' for
+##  certain model types
+
+
+
+####################################################################
+##revision 2.2-1 (7 March 2019)
+##- added 'DIC' and 'dictab' methods for objects of classes 'jagsUI'
+##- added new functions 'ictab' and 'modavgIC' for generic information
+##  criteria, and added 'print' and 'xtable' methods for these classes
+##- modified 'evidence' to include 'ictab' objects
+##- modified sorting of models in 'aictab', 'bictab', 'dictab',
+##  'aictabCustom', and 'bictabCustom' based on values of delta AIC
+##  instead of Akaike weights to avoid rounding error with low values
+##- modified 'xtable' for nicer printing of K for 'aictab', 'bictab',
+##  and 'anovaOD'
+##- modified value of 'out.type' argument to 'confint' in 'summaryOD'
+##- added 'xtable' method for 'modavgCustom' class and modified 'xtable'
+##  method for 'modavg' when working with models of 'multinom' class
+##- added examples in 'AICcmodavg-package' Rd file
+
+
+
+####################################################################
+##revision 2.2-0 (25 February 2019)
+##- added 'summaryOD' to compute confidence intervals around estimates or
+##  hypothesis tests adjusted for overdispersion (request by M. Kéry)
+##- added methods for objects of 'glm.nb' class
+##- added methods for glmmTMB models (request by Y. Paillet)
+##- added 'parallel' argument in 'Nmix.gof.test' and 'mb.gof.test' for
+##  new 'parallel' argument in 'parboot'
+##- included support of goodness-of-fit statistics of 'mb.chisq' and
+##  'mb.gof.test' for Royle-Nichols models fit with 'occuRN' (thanks to
+##  Dan Linden)
+##- included support for multispecies occupancy data and models of classes
+##  'unmarkedFrameOccuMulti' and 'unmarkedFitOccuMulti'
+##- added 'anovaOD' function to compute likelihood ratio tests corrected
+##  for overdispersion for models of various classes that use the Poisson or
+##  binomial distributions
+##- modified 'covDiag' to handle missing values in data set
+##- updated man page of 'modavgShrink' to include method for 'coxme' class
+##- updated man page of 'importance' to correct typo (thanks to J. Carlisle)
+##- corrected bug in modavg for parameter "b" in false-positive occupancy models
+##- modified sort in 'aictab' and 'bictab' based on delta AIC instead
+##  of Akaike weight
+##- modified printing of NA to "." to save space and improve alignment in
+##  detHist, countDist, xtable, and mb.chisq methods
+##- modified 'modavgPred' and 'modavgEffect' to use 'predict' for
+##  ZIP models fit with 'pcount'
+
+
+
+####################################################################
+##revision 2.1-1 (19 June 2017)
+##- created 'extractX' generic function to extract all predictors that appear
+##  in a given list of candidate models and provide info on these variables
+##  (added imports of getData from nlme and unmarked, and of formula for lme4)
+##- corrected minor bug for unmarkedFitPCO model class with 'modavgShrink'
+##  to modify label of gamma depending on H0 (gamConst, gamAR, gamTrend)
+##- cleaned up modavgEffect
+##- added type = "certain" and "falsepos" as values for the 'parm.type' argument
+##  of 'modavgPred', 'modavgEffect', 'modavgShrink', and 'modavg' methods for
+##  objects of 'unmarkedFitOccuFP' class and added check for consistency of
+##  parameter occurrence in different models
+##- added "iota" as a value for the 'parm.type' argument for 'modavgPred',
+##  'modavgEffect', 'modavgShrink', and 'modavg' methods for objects of
+##  'unmarkedFitPCO' class and added check for consistency of
+##  parameter occurrence in different models
+##- added "detect" as a value for the 'parm.type' argument of 'modavgPred',
+##  'modavgEffect', 'modavgShrink', and 'modavg' methods for objects of
+##  'unmarkedFitDS' class
+##- added "detect" as a value for the 'parm.type' argument of 'modavgPred',
+##  'modavgEffect', 'modavgShrink', and 'modavg' methods for objects of
+##  'unmarkedFitGDS' class
+
+
+
+####################################################################
+##revision 2.1-0 (17 November 2016)
+##- corrected minor bug in storing lower.CL in 'modavgPred' result
+##- modified 'fam.link.mer' to account for negative binomial with 'glmer.nb'
+##- corrected minor bug in rounding output of 'c_hat'
+##- corrected bug in 'countDist' with GDS objects including NA's
+##- modified ifelse( ) test when single site includes NA's in
+##  'mb.chisq.unmarkedFitOccu' and 'mb.chisq.unmarkedFitColExt' (thanks to D. Linden)
+##- added drop = FALSE to preserve matrix in 'mb.chisq.unmarkedFitOccu' and
+##  'mb.chisq.unmarkedFitColExt'
+##- added 'report' argument to print test statistic in terminal for functions
+##  'mb.gof.test' and 'Nmix.gof.test'
+##- added 'checkConv' function to check convergence status of algorithm at
+##  termination for different model classes
+##- added 'checkParms' function to identify parameters with high SE's in
+##  different model classes
+##- modified gls method for 'predictSE' to extract model formula following
+##  suggestion by C. R. Andersen
+##- corrected bug in creating final plot of theoretical distribution of sums of
+##  chi-squares in mb.gof.test for dynamic occupancy models (thanks to M. Kéry)
+##- corrected bug in 'covDiag'
+##- added 'useBIC' and 'bictab' methods for different model objects based on
+##  Bayesian Information Criterion
+##- added 'useBICCustom' function to compute BIC or QBIC from user-supplied
+##  inputs (log-likelihood, K, n, c.hat)
+##- added 'bictabCustom' function to create model selection table using BIC or
+##  QBIC from user-supplied inputs
+##- added methods for 'xtable' for objects of 'checkParms' and 'bictab' classes
+##- added functionality of 'evidence' with dictab and bictab objects
+##- added new 'useBIC' argument to 'modavgCustom' to conduct multimodel inference
+##  based on BIC from user-supplied inputs
+##- removed functions that were moved to defunct during previous cycle of package
+
+
+
+####################################################################
+##revision 2.0-4 (10 February 2016)
+##- updated email address
+##- modified 'mb.gof.test' to deal with dynamic occupancy data for entire
+##  visits without data, and seasons with only a single visit (Thanks to G. Sadoti for comments)
+##- corrected bug for negative binomial models and dispersion argument in
+##  'modavg', 'modavgShrink', 'modavgPred', 'modavgEffect', 'multComp'
+##- corrected bug on parameter count when negative binomial formated to
+##  glm object with glm.convert( )
+##- updated functionality for overdispersion correction of ZIP N-mixture
+##  models in unmarked with 'modavgPred'
+##- added new estimators of overdispersion in 'c_hat' for GLM's (deviance,
+##  Farrington, and Fletcher) and print method
+##- added comment on help page of 'mb.gof.test' to clarify that the table
+##  only shows the observed detection histories, but that unobserved
+##  detection histories are included in the computations, and that the
+##  chi-square test statistic should be compared against bootstrap
+##  distribution because low expected frequencies invalidate chi-square
+##  assumption.
+##- modified 'modavgEffect' to allow multiple variables to vary and print
+##  generic group names
+##- modified 'modavgShrink' to allow cases where variables do not appear
+##  with the same frequency in models, but issues a warning
+##- corrected bug in 'modavgShrink' to deal with 'unmarkedFitGDS' objects
+##  on lambda
+##- added support for model selection of 'lavaan' class objects
+##- added support for model selection of fitdistr class objects
+##  (package MASS)
+##- added support for model selection of fitdist class objects
+##  (package fitdistrplus)
+##- added functionality to request CI's (back-transformed when using
+##  type = "response") with 'modavgPred' and modified 'xtable.modavgPred'
+##- added covariance diagnostic for lambda in N-mixture models based on
+##  Dennis et al. 2015 Biometrics 71: 237-246
+##- added 'detHist' function to summarize information on detection histories
+##- added 'countHist' function to summarize information on count data
+##- added 'countDist' function to summarize information on count data
+##  collected by distance sampling
+##- added xtable methods for objects of 'detHist' and 'countHist' classes
+##- added fat and body measurement data set
+##- added GPA data set and test scores
+##- moved deprecated functions to defunct
+##- cleaned up print method of functions
+
+
+
+####################################################################
+#revision 2.0-3 (15 January 2015)
+##- modified CITATION file to use meta$Date and meta$Version as requested by CRAN
+##- added the Red-spotted newt CMR data set (Gill 1985)
+
+
+
+####################################################################
+#revision 2.0-2 (5 January 2015)
+##- added support for c-hat argument for dynamic occupancy models fit with 'colext' and additional mixture 
+##  models fit from 'distsamp', 'gdistsamp', 'gmultmix', 'gpcount', 'multinomPois', and 'occuRN'
+##- made 'Nmix.chisq' and 'Nmix.gof.test' generic and added support for different N-mixture models
+##  and updated the Rd file
+##- made 'mb.chisq' and 'mb.gof.test' generic for unmarkedFitOccu and unmarkedFitColExt models,
+##  modified structure of output, added new arguments 'print.seasons' for 'mb.gof.test.unmarkedFitColExt',
+##  and updated the Rd file
+##- added new function to estimate c-hat in lme4 models and made 'c_hat' function generic and
+##  updated the Rd file
+##- clarified examples in Rd file of 'modavg' to clearly illustrate how to exclude models when
+##  model-averaging the main effect of a variable also involved in an interaction
+##- corrected bug in 'boot.wt' when sorting models in ascending order of Akaike weight
+##- created a separate class for 'boot.wt' objects and print method to facilitate LaTeX formatting
+##- created methods for 'xtable' to format objects from 'aictab', 'boot.wt', 'dictab', 'modavg', 'modavgShrink',
+##  'modavgPred', 'modavgEffect', 'multComp', 'mb.chisq' to LaTeX
+
+
+
+####################################################################
+#revision 2.01 (9 October 2014)
+#- corrected bugs in 'modavg' and 'modavgShrink' for models of class 'unmarkedFitGMM' and 'unmarkedFitGPC'
+#- corrected bugs in 'dictab' to return deviance of all models in model selection table
+#- added logical test to identify cases with only a single cohort without missing values for
+#  'mb.chisq'
+#- added custom versions of 'AICc', 'aictabCustom', and 'modavgCustom' when user manually supplies log-Likelihood,
+#  K, estimates, and SE for model selection and multimodel inference when model type is not supported or
+#  SE's are not available from predict methods (convenient for importing output from other software such as PRESENCE)
+#- added support for hurdle models for count data for model selection and model averaging parameter estimates
+#- added support for model selection of models of the 'gnls' class 
+#- added support for model selection and multimodel inference of models of the 'betareg' class
+#- added support for model selection and multimodel inference of models of the 'survreg' class
+#- modified 'multComp' for computation of critical values with z value instead of t for certain model types
+#- corrected minor bug of 'multComp' for some models with a factor consisting of two levels
+#- added 'extractCN' function for models of 'unmarkedFit' classes
+#- modified namespace
+
+
+
+####################################################################
+#revision 2.00 (14 July 2014)
+#- modified predictSE.lme( ) to handle the use of formulas specified externally from model call
+#  suggested by Clark Andersen
+#- added support for named lists of candidate models and add generic model names when modnames vector is NULL
+#  in model selection and model averaging functions
+#- replaced functions 'extract.LL', 'modavg.effect', 'modavgpred', 'modavg.shrink', 'mult.comp',  with 'extractLL',
+#  'modavgEffect', 'modavgPred', 'modavgShrink', and 'multComp' respectively, to avoid problems with generic functions
+#- 'extractLL', 'extractSE', 'AICc', 'aictab', 'modavg', 'modavgEffect', 'modavgShrink', 'modavgPred',
+#  'multComp', and predictSE made generic
+#- changed order of some arguments to present the most often used first
+#- added a check in 'multComp' for missing values in data set, and added options to correct confidence intervals for multiple comparisons
+#- added support for presence-only models of maxlikeFit class
+#- added support for models of classes 'coxme' and 'lmekin'
+#- added support for models of classes 'vglm' (package VGAM) and 'zeroinfl' (package pscl)
+#- added support for models of 'unmarkedFitGMM', 'unmarkedFitMPois', and unmarkedFitGPC classes
+#- added support for model averaging availability parameter (phi) for models of 'unmarkedFitGMM',
+#  'unmarkedFitMPois', and unmarkedFitGPC classes
+#- corrected minor bug in some cases of missing values in 'Nmix.chisq'
+#- corrected minor bug in 'mb.gof.test' that produced warning( )
+#- added aov method for all generic functions of the package
+#- simplified Rd files AICc.rd, aictab.Rd, boot.wt.Rd, DIC.Rd, dictab.Rd, importance.Rd, modavg.Rd, modavg.effect.Rd
+#- added Bullfrog occupancy data set
+#- added Spotted salamander capture-mark-recapture data set
+#- added Gopher Tortoise distance sampling data set
+
+
+
+####################################################################
+#revision 1.35 (17 November 2013)
+#- corrected minor bug in chi-square for N-mixture models in 'Nmix.chisq'
+#- corrected minor bug in title display, now uses as.expression(substitute( ))
+
+
+
+####################################################################
+#revision 1.34 (13 November 2013)
+#- added functionality to compute model-averaged estimates (means)
+#  with 'mult.comp'
+#- added functionality for clogit models
+#- added one-way ANOVA turkey data set
+#- added two-way ANOVA iron data set
+#- modified 'predictSE.zip' to handle offsets and added c.hat argument
+#- added functionality of overdispersion correction for N-mixture models
+#  in 'aictab', 'modavg', 'modavgpred', 'modavg.effect'
+#  'modavg.shrink', 'predictSE.zip'
+#- added functions 'Nmix.gof.test' and 'Nmix.chisq' to assess GOF of 
+#  N-mixture models
+
+
+
+####################################################################
+#revision 1.33 (12 September 2013)
+#- added 'mult.comp' function to compute multiple comparisons on factors
+#- added 'boot.wt' function to compute bootstrapped relative frequencies
+#- corrected minor bug in 'mb.chisq' for certain patterns of missing values
+#- added conditional test to avoid problems on CRAN with some packages unavailable
+#  on certain platforms
+#- added the lizards habitat preference data set
+
+
+####################################################################
+#revision 1.32 (5 July 2013)
+#- corrected minor bug in 'modavg' when model-averaging with models of classes 'clm' and 'clmm' when the 'exclude' argument was used
+#- corrected bug with certain types of missing values in mb.chisq( )
+#- added function to extract DIC and create model selection tables based on DIC (functions 'DIC' and 'dictab')
+
+
+
+####################################################################
+#revision 1.31 (26 June 2013)
+#- added functions to work with new 'merMod' classes of package lme4
+
+
+
+
+####################################################################
+#revision 1.30 (16 May 2013)
+#- modified example code of predictSE.zip( ) to avoid errors on some platforms during package building
+
+
+
+####################################################################
+#revision 1.29 (22 April 2013)
+#- added 'mb.chisq' to implement MacKenzie and Bailey (2004) goodness-of-fit test on single-season occupancy models
+#  and 'mb.gof.test' to compute P-values, c-hat, and histogram of bootstrapped test statistics
+#- corrected bug for offsets in predictSE.mer( )
+
+
+
+####################################################################
+#revision 1.28 (21 March 2013)
+#- added functionality for zip models to compute SE's of predictions on abundance of N-mixture models from unmarked
+#- added functionality for 'occuFP' models (detections with false-positives)
+
+
+
+####################################################################
+#revision 1.27 (7 February 2013)
+#- implemented model-averaging estimates and predictions for 'gdistsamp' models
+#- added support for nonlinear mixed models of class 'nlme'
+
+
+####################################################################
+#revision 1.26 (30 August 2012)
+#- added support for robust regression models of class 'rlm' - AICc, aictab, importance, modavg, modavg.effect, modavg.shrink, modavgpred
+#- added support for ordinal logistic regression models of classes 'clm' and 'clmm' - AICc, aictab, importance, modavg, modavg.effect, modavg.shrink 
+#- modified modavg.unmarked( ) to enable treatment of gamma parameter in pcountOpen models 
+#  with different formulations (Const, Trend, AR)
+#- added reference of Luckacs et al. 2010 about model averaging with shrinkage in modavg.shrink.Rd file
+#- added references Burnham et al. 2011 for using model selection as alternative to multiple comparisons in modavg.effect.Rd file
+#- removed white space from formulas to reduce chance of reaching character limit in parse( ) in predictSE.mer( ), predictSE.lme( ), and predictSE.gls( )
+#- changed treatment of parm with modavg.unmarked to add object parm.strip (line 35) to enable functionality with regexpr( )
+
+
+
+####################################################################
+##revision 1.25 (7 June 2012)
+##- added Cox proportional hazards model support
+##- added modavg.effect functions to compute model-averaged effect
+##  sizes for true experiments as an information-theoretic analogue 
+##  to multiple comparisons
+
+
+
+####################################################################
+##revision 1.24 (6 February 2012)
+##- corrected minor bug in AICc.nls( ) to determine number of observations
+##  automatically when "second.ord = TRUE"
+
+
+
+####################################################################
+##revision 1.23 (27 January 2012)
+##- corrected minor bug following revision 1.22 on predictSE.mer( ) 
+##  to avoid problems with factors
+
+
+
+####################################################################
+##revision 1.22 (19 January 2012)
+##- modified example in modavg( ) help file
+##- added error message for models without intercept with modavg( )
+##- added support for offset variable in predictSE.mer( ) for Poisson GLMM
+##- added support for 'distsamp' and 'gdistsamp' models from unmarked package 
+##  (Poisson or negative binomial abundance with log link)
+##- added example in modavg( ) and modavgpred( ) for 'distsamp' models
+##- added example for Poisson GLMM with log link and offset
+
+
+
+####################################################################
+##revision 1.21 (4 November 2011)
+##- corrected error in computing sample size for binomial model with events/trials syntax in AICc.glm( ) and AICc.mer( )
+
+
+
+####################################################################
+##revision 1.20 (3 October 2011)
+##- added functionality of 'nobs' argument for objects created 
+##  in unmarked package
+
+
+
+####################################################################
+##revision 1.19 (14 September 2011)
+##- created function 'predictSE.gls' to compute predicted values 
+##  and SE's from 'gls' model fits and added functionality of 
+##  'modavgpred' with 'gls' model fit
+##- added documentation with examples for 'gls' 
+
+
+
+####################################################################
+##revision 1.18 (26 August 2011)
+##- added NAMESPACE
+##- modified functions 'extractSE.mer' and streamlined extraction of estimate 
+##  labels of 'mer' objects in 'modavg.mer', 'modavg.shrink.mer', 'importance'
+
+
+
+####################################################################
+##revision 1.17 (17 June 2011)
+##- fixed minor bug for external calls to AICc to assign 'unmarkedFit' classes
+##- added functionality of 'AICc', 'aictab', 'evidence', 'importance', 'confset' with 'nls' fits
+
+
+
+########################################################
+##revision 1.16 (27 May 2011)
+##- added model selection and multimodel inference functionality with 
+##  unmarked package for objects of classes unmarkedFitOccu, 
+##  unmarkedFitColExt, unmarkedFitPCount, unmarkedFitPCO, unmarkedFitOccuRN
+##  for models incorporating detectability 
+##- modifications of functions 'aictab', 'importance', 'confset', 'evidence', 
+##  'modavg', 'modavgpred', 'modavg.shrink', and extract.LL.unmarked utility 
+##  function added
+##- added new argument parm.type, to specify class of parameters for objects
+##   of unmarkedFit classes
+##- added several examples for dealing with objects of 'unmarkedFit' classes
+##- modified 'modavg', 'modavg.shrink', 'importance', and 'reverse.exclude' 
+##  functions to strip white spaces within elements entered inadvertently 
+##  by user in the parm and exclude arguments
+
+
+
+########################################################
+##revision 1.15 (21 April 2011)
+##- in 'modavg' and related functions, added functionality of dealing with specification of interaction terms (e.g., A:B, B:A, A*B, B*A)
+##  by adding two new utility functions to recognize the terms when user is not consistent in his model syntax
+##- created function 'modavg.shrink' for the shrinkage version of model-averaging estimates to reduce model selection bias when 
+##  the same number of models include/exclude a variable  
+
+
+
+########################################################
+##revision 1.14 (11 March 2011)
+##- fixed minor bug in 'modavg.mer' regarding exclusion of interaction terms as 'formula' includes spaces within interaction terms
+
+
+
+########################################################
+##revision 1.13 (10 January 2011)
+##- fixed minor bug in 'AICc.lme' on the computation of n in certain lme's with several levels
+
+
+
+#######################################################
+##revision 1.12 (22 November 2010)
+##- fixed minor bug in 'modavgpred.lme' that generated error message when second.ord = FALSE
+##- fixed minor bug by dispatching 'mer' class objects to 'AICc.mer'
+##- fixed minor bug with incorrect computation of n for 'mer' models with binomial distribution using 
+##  cbind(incidence, size - incidence) or binary syntax
+
+
+
+#######################################################
+##revision 1.11 (8 October 2010)
+##- fixed minor bug in 'modavgpred.glm' that generated an error message for Poisson, binomial, and negative 
+##  binomial distributions when 'c.hat' = 1 
+##- added additional example in 'predictSE.mer' with gaussian distribution but with log link
+
+
+
+#######################################################
+##revision 1.10 (7 October 2010)
+##- fixed minor bug in 'modavgpred.glm' for SE's of predictions from gaussian model
+##- fixed minor bug in 'modavg.glm' for SE's of beta estimates from negative binomial glm
+
+
+
+#######################################################
+##revision 1.09 (16 September 2010)
+##  - added function 'predictSE.mer' to compute predictions and SE's on predictions
+##    accounting only for fixed effects (mean population prediction) from objects
+##    of 'mer' class
+##  - added functionality to 'modavgpred' to include computation of model-averaged
+##    predictions from objects of class 'mer'
+##  - added a check for link function to ensure same link function was used for all models in 'modavg' when
+##    model averaging beta estimates
+##  - created a utility function to determine family and link function for objects of 'mer' class called by
+##    'modavg', 'modavgpred', and 'predictSE.mer'
+##  - added a warning when some models have an identical (Q)AIC(c) and are possibly redundant in 'aictab'
+##  - corrected minor bug in number of observations in 'modavgpred'
+##  - added a check for binomial family with events/trials syntax to use sum of weights as number of observations
+##    in 'AICc.mer' when nobs = NULL
+
+
+
+#######################################################
+##revision 1.08 (16 August 2010)
+##  - added Suggests "lme4" in DESCRIPTION file
+
+
+
+#######################################################
+##revision 1.07 (24 May 2010)
+##  - modified modavg to include 'nobs' argument in call to modavg.lme and modavg.gls
+##  - added support for generalized linear mixed models of the mer class for AICc, aictab, modavg, evidence, importance, confset functions
+##  - updated information on support for 'mer' class in help files
+##  - added examples in some of the help files with 'mer'
+
+
+
+#######################################################
+#revisions 1.06 (6 February 2010)
+## -added a 'polr' class check to 'AICc' function;
+## -added function 'predictSE.lme' to make predictions based on fixed effects for objects
+##  of class 'lme' (mean population predictions) and compute associated SE's;
+## -added function 'modvagpred.lme' to compute model-averaged predictions and unconditional 
+##  standard errors for 'lme' models;
+## -added statement in Rd files for 'aictab', 'confset', 'evidence', 'importance', 'modavgpred', 
+##  'modavg',  and generics 'nobs = NULL' defaults to total number of observations in 
+##  computations of information criteria;
+## -added NEWS file to document changes across versions of AICcmodavg package;
+## -added check that same response variable is used throughout model set for 'aictab' and generics
+##  with lapply(X = cand.set, FUN = function(b) formula(b)[2]);
+## -added functionality of 'AICc', 'aictab', 'confset', 'evidence', 'importance', 'modavg' with
+##  objects of 'gls' class;
+## -added additional flexibility to 'evidence' function when model selection table provided is not
+##  sorted ('evidence' now sorts table internally) and set default comparison to top-ranked model 
+##  vs second-ranked model;
+## -added check/error message when no dispersion parameter (i.e., 'gamdisp') is specified for 'modavg'
+##  and 'modavgpred' and generics with gamma regression models;
+## -added additional check/error message when c.hat < 1 in 'AICc.glm';
+
+
+
+#######################################################
+##revisions 1.05 (3 December 2009):
+## -modified number of digits to print with 'importance' to be consistent with revision 1.04;
+## -added parenthesis where one was missing in aictab.Rd under value at line for (Q)AIC(c);
+## -corrected example in evidence.Rd for faulty name of model.low - should have been 
+##  'model.low = raw density';
+## -deleted CumWt when 'sort = FALSE' in 'aictab' - by modifying argument in 'print.aictab';
+## -for 'AICc.glm', 'AICc.mult', c.hat > 1 && c.hat <= 4 now gives warning;
+## -added a column for logLik, quasi-logLik, or restricted logLik in 'aictab';
+## -added options in 'print.aictab' to select items to display;
+## -added a check for 'exclude =' in 'modavg' and generics to warn if exclude is not a list:
+##  
+##  if(!is.null(exclude)) {
+##    if(!is.list(exclude)) stop(cat("\n\'exclude\' should be a list\n"))
+##  }
+##
+## -documented 'aictab' with new LL, Quasi.LL, Res.LL elements
+## -used 'vcov' and argument 'dispersion =' to scale SE's in a single step instead of adding 
+##  more code to scale it on separate lines - works with Poisson, Binomial, Gamma;
+## -in 'modavg.polr' and 'modavg.mult', added a logical test to distinguish between 'coef' 
+##  or zeta which are the intercepts; 
+## -modified 'print.aictab' so that c_hat is printed only when c_hat appears in AICc table 
+##  (i.e, when any(names(x)=="c_hat"));
+## -modified 'print.modavg' so that c_hat is printed only when c_hat appears in AICc table 
+##  (i.e, when any(names(oldtab)=="c_hat")) AND deleted Cum.Wt from x$Mod.avg.table;
+##  -added a check for the order for aictab and modavg and generics so that LL and other 
+##  measures are displayed properly in table and sorted at the very end (placed line of sort 
+##  and cumsum at very end of code) with Results[rev(order(Results[,5])), ];
+## -added Cum.Wt in last column of Results;
+## -changed order of elements with colnames so that prints nicely - this affects 'importance', 
+##  'confset', and 'evidence' - number of columns used might differ depending on what is 
+##  requested;
+## -in 'modavg' and generics, changed 'regexpr' to determine whether parameter appears alone 
+##  in the model and added 'fixed = TRUE', to find matches "as is" to avoid problems with 
+##  'mult' (e.g., "well|mild");
+
+
+
+#######################################################
+##revision 1.04 (11 November 2009):
+## -added the new equation for unconditional SE based on equation 6.12 of Burnham and 
+##  Anderson (2002) in 'modavg' and 'modavgpred' and new argument 'uncond.se' with default 
+##  value "revised" -  'uncond.se = old' uses equation 4.19;
+## -added a check to determine whether all link functions are identical for 'modavg' 
+##  as averaging over beta estimates under different link functions is not appropriate 
+##  and returns error);
+## -added a check to determine whether all link functions are identical for 'modavgpred' 
+##  when linear predictor is used;
+## -changed default to display only 2 digits after decimal point for all output 'print' 
+##  generic functions;
+
+
+
+#######################################################
+##revision 1.03 (21 October 2009):
+## -replaced 'regexpr' in 'modavg.glm', 'modavg.lme', 'modavg.mult' with 'match';
+## -add functionality for 'polr';
+## -cleaned up code with indentations;
+## -added 'exclude' argument to manually exclude models with interaction terms/quadratic 
+##  terms in 'modavg';
+## -added 'warn' argument (to suppress warning that variables with similar names appear 
+##  in a given model) to 'modavg' function.  This is a fundamental difference with the 
+##  previous versions of the function as now the user must specify the variables (as a list) 
+##  to exclude models for the computation of model-averaged estimates (case when 
+##  interaction/polynomial terms are present).  This modication also solved the 
+##  problem of variables with similar names;
+
+
+
+#######################################################
+##revision 1.02 (29 September 2009):
+## -corrected small bug for computation of AICc (in 'AICc.glm') for binomial models with 
+##  events/trials syntax to use the correct sample size;
+## -added function to compute (Q)AIC(c) for multinomial models and updated 'aictab' 
+##  function accordingly;
+## -added citation file;
+## -changed 'Depends' to 'Suggests' for packages MASS, nnet, nlme;
+## -modified 'importance' to include 'multinom' objects;
+## -removed dependencies with nlme to avoid potential problems with lme4;
+
+
+
+#######################################################
+##revision 1.01 (3 September 2009):
+## -cleaned up documentation file, added a few more sentences and added space within formulas 
+##  for the example to display properly in pdf;
+
+
